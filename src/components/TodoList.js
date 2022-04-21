@@ -1,9 +1,14 @@
 import TodoItem from "./TodoItem";
 
-function TodoList({ todos }) {
+function TodoList({ todos, changeState, changeContent }) {
   const todoItems = todos.map(todo => {
     return (
-      <TodoItem isComplete={todo.isComplete} content={todo.content} />
+      <TodoItem key={todo.id}
+        isComplete={todo.isComplete}
+        content={todo.content}
+        changeState={(state) => changeState(todo, state)}
+        onChangeContent={(content) => changeContent(todo, content)}
+      />
     );
   });
 

@@ -1,11 +1,9 @@
 function Status({
-  isComplete
+  isComplete,
+  onClick
 }) {
-  if (isComplete) {
-    return <span>✔ </span>
-  } else {
-    return <span>✘ </span>
-  }
+  const label = isComplete ? '✔ ' : '✘ '
+  return <span className="cursor-pointer" onClick={() => onClick(!isComplete)}>{label}</span>
 }
 
 export default Status;

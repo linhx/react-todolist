@@ -1,13 +1,18 @@
 import Status from "./Status";
+import TodoContent from "./TodoContent";
 
 function TodoItem({
   isComplete,
-  content
+  content,
+  changeState,
+  onChangeContent
 }) {
+  let className = 'todo-item py-1';
+  className += isComplete ? ' line-through text-gray-400' : ' text-orange-600';
   return (
-    <div class="todo-item">
-      <Status isComplete={isComplete} />
-      <span>{content}</span>
+    <div className={className}>
+      <Status isComplete={isComplete} onClick={changeState} />
+      <TodoContent content={content} onChange={onChangeContent} />
     </div>
   );
 }
