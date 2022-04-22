@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from "react";
 
 function TodoContent({
   content,
-  onChange
+  onChange,
+  className
 }) {
   const [isEdit, setIsEdit] = useState(false);
   const textInput = useRef(null);
@@ -37,13 +38,14 @@ function TodoContent({
   }
 
   if (isEdit) {
-    return <input ref={textInput}
-      className="px-2 py-1 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 rounded-md sm:text-sm focus:ring-1"
+    return <input
+      ref={textInput}
+      className={className + ' input no-underline'}
       value={cloneContent}
       onChange={(e) => {setCloneContent(e.target.value)}}
       onKeyDown={onKeyDown} />
   } else {
-    return <span className="cursor-pointer" onDoubleClick={startEdit}>{content}</span>
+    return <span className={className + ' cursor-pointer text-ellipsis overflow-hidden'} onDoubleClick={startEdit}>{content}</span>
   }
 }
 
