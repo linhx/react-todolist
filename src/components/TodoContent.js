@@ -21,7 +21,7 @@ function TodoContent({
   }
 
   const onKeyDown = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && e.ctrlKey) {
       onChange(e.target.value);
       e.target.blur();
       setIsEdit(false);
@@ -38,14 +38,15 @@ function TodoContent({
   }
 
   if (isEdit) {
-    return <input
+    return <textarea
       ref={textInput}
+      rows="3"
       className={className + ' input no-underline'}
       value={cloneContent}
       onChange={(e) => {setCloneContent(e.target.value)}}
       onKeyDown={onKeyDown} />
   } else {
-    return <span className={className + ' cursor-pointer text-ellipsis overflow-hidden'} onDoubleClick={startEdit}>{content}</span>
+    return <span className={className + ' cursor-pointer break-all whitespace-pre-wrap'} onDoubleClick={startEdit}>{content}</span>
   }
 }
 

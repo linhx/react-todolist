@@ -1,14 +1,16 @@
 import TodoItem from "./TodoItem";
 
 function TodoList({
+  id,
   name,
   todos,
   changeState,
   changeContent,
   add,
+  deleteTodoList,
   className
 }) {
-  const todoItems = todos.map(todo => {
+  const todoItems = (todos || []).map(todo => {
     return (
       <div key={todo.id}>
         <TodoItem
@@ -29,10 +31,16 @@ function TodoList({
     }
   }
 
+  const onDeleteTodoList = () => {
+    if (window.confirm("Delete?")) {
+      deleteTodoList(id)
+    }
+  }
+
   return (
     <div className={className}>
       <div>
-        <h5>{name}</h5>
+        <h5 className="flex"><span className="cursor-pointer pr-2" onClick={onDeleteTodoList}>✘</span><span className="inline-block text-ellipsis overflow-hidden ">{name}</span></h5>
         <input className="input" placeholder="Add new" onKeyDown={onKeyDown} />
       </div>
       {todoItems}
