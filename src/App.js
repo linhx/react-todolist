@@ -38,6 +38,9 @@ function App() {
     setTodoLists(todoLists.slice());
   }
   const addTodo = async (todoList, content) => {
+    if (!content) {
+      return;
+    }
     const newTodo = await TodoRepository.addTodo({
       todoListId: todoList.id,
       content
@@ -58,18 +61,30 @@ function App() {
     }
   }
 
+  const deleteTodoList = async (id) => {
+    await TodoRepository.deleteList(id);
+    const index = todoLists.findIndex(todoList => todoList.id === id);
+    if (index > -1) {
+      todoLists.splice(index, 1);
+    }
+    setTodoLists(todoLists.slice());
+  }
+
   const todoListComp = todoLists.map(todoList => <TodoList
     key={todoList.id}
+    id={todoList.id}
     name={todoList.name}
     todos={todoList.todos}
     changeState={changeState}
     changeContent={changeContent}
-    add={(content) => addTodo(todoList, content)} />);
+    add={(content) => addTodo(todoList, content)}
+    deleteTodoList={deleteTodoList}
+  />);
   return (
     <div className="App max-w-8xl mx-auto px-4 sm:px-6 md:px-8">
       <div className="pb-2">
         <h4 className='text-2xl'>TODO List</h4>
-        <i>Click ✔/✘ to change status. Double click to edit, Ctrl + Enter to change, Esc to discard.</i>
+        <i>Click ✔/✘ to change status. Double click to edit, Ctrl + Enter to change, Esc to discard, Clear content to delete.</i>
       </div>
       <div className="grid grid-cols-4 gap-4 mb-4">
         <input

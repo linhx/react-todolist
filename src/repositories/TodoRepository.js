@@ -61,6 +61,10 @@ const TodoRepository = {
     return newTodoList;
   },
 
+  async deleteList(id) {
+    localStorage.removeItem(`${TODO_LIST_ID}-${id}`);
+  },
+
   async addTodo({ todoListId, content }) {
     const id = generateTodoId();
     const todo = {
