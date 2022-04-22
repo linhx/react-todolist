@@ -8,7 +8,7 @@ function TodoList({
   add,
   className
 }) {
-  const todoItems = todos.map(todo => {
+  const todoItems = (todos || []).map(todo => {
     return (
       <div key={todo.id}>
         <TodoItem
