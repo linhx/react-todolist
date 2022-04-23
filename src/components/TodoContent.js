@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import TextareaWithBtn from "./TextareaWithBtn";
 
 function TodoContent({
   content,
@@ -20,31 +21,27 @@ function TodoContent({
     setIsEdit(true);
   }
 
-  const onKeyDown = (e) => {
-    if (e.key === 'Enter' && e.ctrlKey) {
-      onChange(e.target.value);
-      e.target.blur();
-      setIsEdit(false);
-      return;
-    }
+  const onSubmit = () => {
+    onChange(cloneContent);
+    setIsEdit(false);
+  }
 
-    if (e.key === 'Escape') {
-      onChange(content);
-      setCloneContent(content);
-      e.target.blur();
-      setIsEdit(false);
-      return;
-    }
+  const discard = () => {
+    setCloneContent(content);
+    setIsEdit(false);
   }
 
   if (isEdit) {
-    return <textarea
-      ref={textInput}
+    return <TextareaWithBtn
+      textareaRef={textInput}
       rows="3"
-      className={className + ' input no-underline'}
+      className="grow"
+      classNameTextarea={className + ' input no-underline'}
       value={cloneContent}
       onChange={(e) => {setCloneContent(e.target.value)}}
-      onKeyDown={onKeyDown} />
+      onSubmit={onSubmit}
+      discard={discard}
+    />
   } else {
     return <span className={className + ' cursor-pointer break-all whitespace-pre-wrap'} onDoubleClick={startEdit}>{content}</span>
   }
