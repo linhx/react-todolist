@@ -56,6 +56,7 @@ function App() {
       });
       setNewTodoListName('');
   
+      newTodoList.todos = [];
       todoLists.push(newTodoList);
       setTodoLists(todoLists.slice());
     }
@@ -86,7 +87,7 @@ function App() {
         <h4 className='text-2xl'>TODO List</h4>
         <i>Click ✔/✘ to change status. Double click to edit, Ctrl + Enter to change, Esc to discard, Clear content to delete.</i>
       </div>
-      <div className="grid grid-cols-4 gap-4 mb-4">
+      <div className="grid gap-4 mb-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         <input
           className="input"
           placeholder="Enter new TODO list"
@@ -95,7 +96,7 @@ function App() {
           onKeyDown={addTodoList}
         />
       </div>
-      <div className='grid grid-cols-4 gap-4'>
+      <div className="grid gap-4 mb-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {todoListComp}
       </div>
     </div>

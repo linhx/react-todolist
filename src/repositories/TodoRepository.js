@@ -63,13 +63,24 @@ const TodoRepository = {
 
   async deleteList(id) {
     localStorage.removeItem(`${TODO_LIST_ID}-${id}`);
+    
+    const maxTodoId = +localStorage.getItem(TODO_ID) || 0;
+    for (let i = maxTodoId; i > 0 ; i--) {
+      const todoJson = localStorage.getItem(`${TODO_ID}-${i}`);
+      if (todoJson) {
+        const todo = JSON.parse(todoJson);
+        if (todo.todoListId == id) {
+          localStorage.removeItem(`${TODO_ID}-${todo.id}`);
+        }
+      }
+    }
   },
 
   async addTodo({ todoListId, content }) {
     const id = generateTodoId();
     const todo = {
       id,
-      todoListId: todoListId,
+      todoListId,
       content,
       isComplete: false
     }
