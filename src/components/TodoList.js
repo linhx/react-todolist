@@ -1,3 +1,5 @@
+import { useState } from "react";
+import TextareaWithBtn from "./TextareaWithBtn";
 import TodoItem from "./TodoItem";
 
 function TodoList({
@@ -24,11 +26,18 @@ function TodoList({
   });
 
   const onKeyDown = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && e.ctrlKey) {
       add(e.target.value);
       e.target.value = '';
       return;
     }
+  }
+
+  const [newTodoListName, setNewTodoListName] = useState(''); 
+
+  const onSubmit = () => {
+    add(newTodoListName);
+    setNewTodoListName('');
   }
 
   const onDeleteTodoList = () => {
@@ -41,7 +50,15 @@ function TodoList({
     <div className={className}>
       <div>
         <h5 className="flex"><span className="cursor-pointer pr-2" onClick={onDeleteTodoList}>✘</span><span className="inline-block text-ellipsis overflow-hidden ">{name}</span></h5>
-        <input className="input" placeholder="Add new" onKeyDown={onKeyDown} />
+        <TextareaWithBtn
+          rows="3"
+          placeholder="Add new"
+          className="grow"
+          classNameTextarea="input"
+          value={newTodoListName}
+          onChange={(e) => {setNewTodoListName(e.target.value)}}
+          onSubmit={onSubmit}
+        />
       </div>
       {todoItems}
     </div>
